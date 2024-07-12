@@ -12,7 +12,7 @@ const passport_1 = __importDefault(require("passport"));
 const authRoutes_1 = __importDefault(require("./routes/authRoutes"));
 const leadRoutes_1 = __importDefault(require("./routes/leadRoutes"));
 require("./config/passportConfig");
-const errorHandler_1 = __importDefault(require("./middleware/errorHandler")); // Import error handling middleware
+const errorHandler_1 = __importDefault(require("./middlewares/errorHandler")); // Import error handling middleware
 const logger_1 = __importDefault(require("./config/logger"));
 const swagger_1 = __importDefault(require("./config/swagger")); // Import the Swagger setup
 dotenv_1.default.config();

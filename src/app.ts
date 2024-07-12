@@ -7,7 +7,7 @@ import passport from "passport";
 import authRoutes from "./routes/authRoutes";
 import leadRoutes from "./routes/leadRoutes";
 import "./config/passportConfig";
-import errorHandler from "./middleware/errorHandler"; // Import error handling middleware
+import errorHandler from "./middlewares/errorHandler"; // Import error handling middleware
 import logger from "./config/logger";
 import swaggerSetup from "./config/swagger"; // Import the Swagger setup
 

@@ -2,6 +2,8 @@ import { Request, Response } from 'express';
 import leadService from '../services/leadService';
 import emailService from '../services/emailService';
 import mlService from '../services/mlService';
+import { scrapeWebsiteForLeads } from '../services/scrapingService';
+import { fetchLeadDataFromLinkedIn } from '../services/apiIntegrationService';
 import logger from '../config/logger';  // Import the logger
 
 const handleError = (error: unknown, res: Response) => {
@@ -112,6 +114,28 @@ export const sendEmailToLead = async (req: Request, res: Response) => {
     );
     logger.info(`Email sent to lead: ${req.params.id}`);  // Log email sent
     res.status(200).json({ message: 'Email sent successfully' });
+  } catch (error) {
+    handleError(error, res);
+  }
+};
+
+// Scrape leads from a website
+export const scrapeLeads = async (req: Request, res: Response) => {
+  try {
+    const leads = await scrapeWebsiteForLeads(req.body.url);
+    logger.info('Leads scraped from website');
+    res.status(200).json(leads);
+  } catch (error) {
+    handleError(error, res);
+  }
+};
+
+// Get lead data from LinkedIn
+export const getLinkedInLeadData = async (req: Request, res: Response) => {
+  try {
+    const leadData = await fetchLeadDataFromLinkedIn(req.params.leadId);
+    logger.info(`Fetched LinkedIn lead data for ID: ${req.params.leadId}`);
+    res.status(200).json(leadData);
   } catch (error) {
     handleError(error, res);
   }

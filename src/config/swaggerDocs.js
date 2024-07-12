@@ -231,3 +231,47 @@
  *         description: Server error
  */
 
+// Web Scraping Route
+/**
+ * @swagger
+ * /api/leads/scrape:
+ *   post:
+ *     summary: Scrape leads from a website
+ *     tags: [Leads]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               url:
+ *                 type: string
+ *                 description: The URL of the website to scrape
+ *     responses:
+ *       200:
+ *         description: Successfully scraped leads
+ *       500:
+ *         description: Server error
+ */
+
+// LinkedIn API Integration Route
+/**
+ * @swagger
+ * /api/leads/linkedin/{leadId}:
+ *   get:
+ *     summary: Get lead data from LinkedIn
+ *     tags: [Leads]
+ *     parameters:
+ *       - in: path
+ *         name: leadId
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: The LinkedIn lead ID
+ *     responses:
+ *       200:
+ *         description: Successfully fetched LinkedIn lead data
+ *       500:
+ *         description: Server error
+ */

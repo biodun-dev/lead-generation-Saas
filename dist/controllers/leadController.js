@@ -12,10 +12,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.sendEmailToLead = exports.scoreLead = exports.deleteLead = exports.updateLead = exports.getLeadById = exports.getLeads = exports.createLead = void 0;
+exports.getLinkedInLeadData = exports.scrapeLeads = exports.sendEmailToLead = exports.scoreLead = exports.deleteLead = exports.updateLead = exports.getLeadById = exports.getLeads = exports.createLead = void 0;
 const leadService_1 = __importDefault(require("../services/leadService"));
 const emailService_1 = __importDefault(require("../services/emailService"));
 const mlService_1 = __importDefault(require("../services/mlService"));
+const scrapingService_1 = require("../services/scrapingService");
+const apiIntegrationService_1 = require("../services/apiIntegrationService");
 const logger_1 = __importDefault(require("../config/logger")); // Import the logger
 const handleError = (error, res) => {
     if (error instanceof Error) {
@@ -133,3 +135,27 @@ const sendEmailToLead = (req, res) => __awaiter(void 0, void 0, void 0, function
     }
 });
 exports.sendEmailToLead = sendEmailToLead;
+// Scrape leads from a website
+const scrapeLeads = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const leads = yield (0, scrapingService_1.scrapeWebsiteForLeads)(req.body.url);
+        logger_1.default.info('Leads scraped from website');
+        res.status(200).json(leads);
+    }
+    catch (error) {
+        handleError(error, res);
+    }
+});
+exports.scrapeLeads = scrapeLeads;
+// Get lead data from LinkedIn
+const getLinkedInLeadData = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const leadData = yield (0, apiIntegrationService_1.fetchLeadDataFromLinkedIn)(req.params.leadId);
+        logger_1.default.info(`Fetched LinkedIn lead data for ID: ${req.params.leadId}`);
+        res.status(200).json(leadData);
+    }
+    catch (error) {
+        handleError(error, res);
+    }
+});
+exports.getLinkedInLeadData = getLinkedInLeadData;
